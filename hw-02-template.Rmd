@@ -81,7 +81,27 @@ net_min %>%
 ## Exercise 3
 
 ```{r ex3, out.width = "80%"}
-# Write your code to answer exercise 3 here
+mile_data <- run17 %>%
+  filter(event == "10 Mile") %>%
+  mutate(start_time = clock_sec - net_sec, wave = case_when(start_time < 180 ~ "First Wave", start_time > 1380 ~ "Last Wave")) %>%
+  filter(!is.na(wave))
+
+Wave_Colours <- c("First Wave" = "orange", "Last Wave" = "Green")
+
+mile_data %>%
+  ggplot(mapping = aes(x = age, y = net_sec/60, colour = wave)) +
+  geom_point(alpha = 0.5, size = 0.9) +
+  geom_smooth(method = lm, se = FALSE, linewidth = 0.5) +
+  scale_colour_manual(values = Wave_Colours, name = "") +
+  labs(title = "Scatter Plot of 10 Mile Race, Time Against Age", 
+subtitle = "First vs Last Wave",
+x = "Runners Age, in Years",
+y = "Race Time, in Minutes") +
+  theme_minimal() + theme(legend.position = "bottom",
+                          aspect.ratio = 5/6,
+                          panel.border = element_rect(colour = "grey", fill = NA, 
+                                                      linewidth = 1))
+
 
 
 
@@ -99,18 +119,18 @@ net_min %>%
 
 ```{r ex4_good_viz, echo = FALSE, out.width = "80%"}
 # edit the file path accordingly
-knitr::include_graphics("img/good_viz.png")
+knitr::include_graphics("img/goodvis.png")
 ```
 
-_Edit the text below by replacing the bold text with the appropriate information to provide a reference for your image (Please delete this message before submission!)_
 
-**Author/Organisation**, "**Title of website**" [Online]. Available at: **URL** (Accessed: **day month year**)
+
+**flexibooks**, "**ck-12**" [Online]. Available at: **https://flexbooks.ck12.org/cbook/ck-12-cbse-math-class-9/section/14.3/primary/lesson/graphical-representation-of-data/** (Accessed: **02 11 2023**)
 
 
 The above image presents a good data visualisation because:
 
--   _Reason 1_
--   _Reason 2_
+-   Data is presented in an easy to read format with good labeling 
+-   The color scheme of the data allows the bars to be easily differetiated
 
 
 #### Example of a bad data visualisation
@@ -118,18 +138,18 @@ The above image presents a good data visualisation because:
 
 ```{r ex4_bad_viz, echo = FALSE, out.width = "80%"}
 # edit the file path accordingly
-knitr::include_graphics("img/bad_viz.png")
+knitr::include_graphics("img/badvis.jpg")
 ```
 
-_Edit the text below by replacing the bold text with the appropriate information to provide a reference for your image (Please delete this message before submission!)_
 
-**Author/Organisation**, "**Title of website**" [Online]. Available at: **URL** (Accessed: **day month year**)
+
+**Iliya Valchanov**, "**365datascience**" [Online]. Available at: **https://365datascience.com/trending/chart-types-and-how-to-select-the-right-one/** (Accessed: **02 11 2023**)
 
 
 
 The above image presents a bad data visualisation because:
 
--   _Reason 1_
--   _Reason 2_
+-   The data is presented in a way which makes it incredibly hard to compare the sizes of the colour in each bar on the chart
+-   Too much data which is overwhelming to look at and hard to understand
 
 
