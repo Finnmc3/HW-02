@@ -27,11 +27,21 @@ run17 %>%
 ```
 
 
-_Write your text to answer exercise 1a here (Please delete this message before submission!)_
-
+#The average age of runners is around 30 years old
+   mean_age_value <- mean(run17$age[run17$event == "10 Mile"])
+    print(mean_age_value)
+    
+#The oldest runner is about 75
+  max_age_value <- max(run17$age[run17$event == "10 Mile"])
+    print(max_age_value)
+  #The real ma age is 85, this shows how the graph neglects data that is less frequent
+  
 
 ```{r ex1b, out.width="80%"}
-# Write your code for Ex1b here
+run17 %>%
+  filter(event == "5K") %>%
+  ggplot(mapping = aes(x = age)) +
+    geom_histogram(binwidth = 2)
 
 
 
@@ -40,20 +50,30 @@ _Write your text to answer exercise 1a here (Please delete this message before s
 ```
 
 
-_Write your text to answer exercise 1b here (Please delete this message before submission!)_
+#The shape of the graphs is relativley similar with a peak age of runners around the mid 30s
+#There are much more runners around the ages of 10-16 in the 5K race
 
 
 ## Exercise 2
 
 ```{r ex2, out.width = "80%"}
-# Write your code to answer exercise 2a here
+net_min <- run17 %>%
+  mutate(time = net_sec/60)
+
+net_min %>%
+  ggplot() +
+  geom_boxplot(mapping = aes(x = time)) +
+  facet_grid(vars(event),vars(sex)) +
+  labs(title = "Cherryblossom Boxplots", x = "Time in minutes", y = "Percentage of Runners") +
+  coord_flip()
+ 
 
 
 
 
 ```
 
-_Write your text to answer exercise 2b here (Please delete this message before submission!)_
+#Male runners on average were faster in both races than female runners
 
 
 
